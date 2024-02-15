@@ -1,0 +1,181 @@
+ 
+ 1          OPTIONS NONOTES NOSTIMER NOSOURCE NOSYNTAXCHECK;
+ 68         
+ 69         /* EPI5143 Quiz 2 */
+ 70         /* Nora Szabo */
+ 71         /* Feburary 19 2024 */
+ 72         
+ 73         * Create read-only library for quiz 2;
+ 74         libname QUIZ2 "/home/u63569093/EPI5143/quiz2" ACCESS=READONLY;
+ NOTE: Libref QUIZ2 was successfully assigned as follows: 
+       Engine:        V9 
+       Physical Name: /home/u63569093/EPI5143/quiz2
+ 75         
+ 76         /* Question 1 - Create dataset with only admission data from 2002 */
+ 77         
+ 78         data q2_diag_2002;
+ 79         set quiz2.q2_diag;
+ 80         if '01JAN2002'd<=datepart(hraadmdtm)<'01JAN2003'd;
+ 81         run;
+ 
+ NOTE: There were 78902 observations read from the data set QUIZ2.Q2_DIAG.
+ NOTE: The data set WORK.Q2_DIAG_2002 has 10132 observations and 3 variables.
+ NOTE: DATA statement used (Total process time):
+       real time           0.00 seconds
+       user cpu time       0.01 seconds
+       system cpu time     0.00 seconds
+       memory              2569.59k
+       OS Memory           22184.00k
+       Timestamp           02/14/2024 09:47:43 PM
+       Step Count                        24  Switch Count  2
+       Page Faults                       0
+       Page Reclaims                     629
+       Page Swaps                        0
+       Voluntary Context Switches        15
+       Involuntary Context Switches      0
+       Block Input Operations            0
+       Block Output Operations           776
+       
+ 
+ 82         
+ 83         /* Question 2 - Make a variable diag_cat from hdgcd rolled to 3 characters */
+ 84         
+ 85         data q2_diag_2002_d;
+ 86         set q2_diag_2002;
+ 87         diag_cat = substr(hdgcd,1,3);
+ 88         run;
+ 
+ NOTE: There were 10132 observations read from the data set WORK.Q2_DIAG_2002.
+ NOTE: The data set WORK.Q2_DIAG_2002_D has 10132 observations and 4 variables.
+ NOTE: DATA statement used (Total process time):
+       real time           0.00 seconds
+       user cpu time       0.00 seconds
+       system cpu time     0.00 seconds
+       memory              1614.62k
+       OS Memory           21544.00k
+       Timestamp           02/14/2024 09:47:43 PM
+       Step Count                        25  Switch Count  2
+       Page Faults                       0
+       Page Reclaims                     144
+       Page Swaps                        0
+       Voluntary Context Switches        11
+       Involuntary Context Switches      0
+       Block Input Operations            0
+       Block Output Operations           1032
+       
+ 
+ 89         
+ 90         /* Question 3 - use proc freq to make a frequency table for most to least
+ 91         frequent diagnosis */
+ 92         
+ 93         proc freq data=q2_diag_2002_d order=freq;
+ 94         tables diag_cat;
+ 95         run;
+ 
+ NOTE: There were 10132 observations read from the data set WORK.Q2_DIAG_2002_D.
+ NOTE: PROCEDURE FREQ used (Total process time):
+       real time           0.17 seconds
+       user cpu time       0.17 seconds
+       system cpu time     0.00 seconds
+       memory              1987.15k
+       OS Memory           22440.00k
+       Timestamp           02/14/2024 09:47:43 PM
+       Step Count                        26  Switch Count  2
+       Page Faults                       0
+       Page Reclaims                     674
+       Page Swaps                        0
+       Voluntary Context Switches        12
+       Involuntary Context Switches      1
+       Block Input Operations            0
+       Block Output Operations           384
+       
+ 
+ 96         
+ 97         /* I10 is the most frequent diagnosis */
+ 98         
+ 99         /* Question 4 - create a variable that is coded 1 for the most frequent
+ 100        diagnosis and 0 otherwise */
+ 101        data q2_diag_2002_d;
+ 102        set q2_diag_2002_d;
+ 103        I10=0;
+ 104        if diag_cat="I10" then I10=1;
+ 105        run;
+ 
+ NOTE: There were 10132 observations read from the data set WORK.Q2_DIAG_2002_D.
+ NOTE: The data set WORK.Q2_DIAG_2002_D has 10132 observations and 5 variables.
+ NOTE: DATA statement used (Total process time):
+       real time           0.00 seconds
+       user cpu time       0.00 seconds
+       system cpu time     0.00 seconds
+       memory              1745.43k
+       OS Memory           22696.00k
+       Timestamp           02/14/2024 09:47:43 PM
+       Step Count                        27  Switch Count  2
+       Page Faults                       0
+       Page Reclaims                     171
+       Page Swaps                        0
+       Voluntary Context Switches        11
+       Involuntary Context Switches      0
+       Block Input Operations            0
+       Block Output Operations           1032
+       
+ 
+ 106        
+ 107        /* Question 5 - create a flat file with respect to hdghraencwid
+ 108        that includes a variable to indicate if the admission includes
+ 109        the most frequent diagnosis */
+ 110        Proc means data=q2_diag_2002_d noprint;
+ 111        class hdghraencwid;
+ 112        types hdghraencwid;
+ 113        var I10;
+ 114        Output out=q2_diag_2002_df max(I10)=I10;
+ 115        run;
+ 
+ NOTE: There were 10132 observations read from the data set WORK.Q2_DIAG_2002_D.
+ NOTE: The data set WORK.Q2_DIAG_2002_DF has 3024 observations and 4 variables.
+ NOTE: PROCEDURE MEANS used (Total process time):
+       real time           0.01 seconds
+       user cpu time       0.01 seconds
+       system cpu time     0.01 seconds
+       memory              10172.34k
+       OS Memory           32956.00k
+       Timestamp           02/14/2024 09:47:44 PM
+       Step Count                        28  Switch Count  3
+       Page Faults                       0
+       Page Reclaims                     2759
+       Page Swaps                        0
+       Voluntary Context Switches        33
+       Involuntary Context Switches      0
+       Block Input Operations            0
+       Block Output Operations           264
+       
+ 
+ 116        
+ 117        /* Question 6 - create a frequency table for the most frequent diagnosis
+ 118        flag */
+ 119        proc freq data=q2_diag_2002_df;
+ 120        tables I10;
+ 121        run;
+ 
+ NOTE: There were 3024 observations read from the data set WORK.Q2_DIAG_2002_DF.
+ NOTE: PROCEDURE FREQ used (Total process time):
+       real time           0.00 seconds
+       user cpu time       0.01 seconds
+       system cpu time     0.00 seconds
+       memory              862.28k
+       OS Memory           24744.00k
+       Timestamp           02/14/2024 09:47:44 PM
+       Step Count                        29  Switch Count  2
+       Page Faults                       0
+       Page Reclaims                     138
+       Page Swaps                        0
+       Voluntary Context Switches        10
+       Involuntary Context Switches      0
+       Block Input Operations            0
+       Block Output Operations           272
+       
+ 
+ 122        
+ 123        
+ 124        OPTIONS NONOTES NOSTIMER NOSOURCE NOSYNTAXCHECK;
+ 134        
