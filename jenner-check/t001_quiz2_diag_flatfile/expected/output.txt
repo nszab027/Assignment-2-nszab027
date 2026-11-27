@@ -1,0 +1,22 @@
+                                                   The Jenner System               10:22 Friday, November 27, 2026     1
+
+                                                   The FREQ Procedure
+
+                                                                 Cumulative    Cumulative
+                           diag_cat    Frequency    Percent     Frequency      Percent
+                           -----------------------------------------------------------------
+                           I10                 5     38.46            5        38.46
+                           E11                 2     15.38            7        53.85
+                           J18                 2     15.38            9        69.23
+                           K35                 2     15.38           11        84.62
+                           I21                 1      7.69           12        92.31
+                           I25                 1      7.69           13       100.00
+                                                   The Jenner System               10:22 Friday, November 27, 2026     2
+
+                                                   The FREQ Procedure
+
+                                                               Cumulative    Cumulative
+                              I10    Frequency    Percent     Frequency      Percent
+                              ------------------------------------------------------------
+                              0              6     60.00            6        60.00
+                              1              4     40.00           10       100.00
