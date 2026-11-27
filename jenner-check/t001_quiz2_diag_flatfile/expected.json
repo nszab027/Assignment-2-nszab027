@@ -1,0 +1,19 @@
+{
+  "_captured_at": "2026-11-27T10:22:56.329880Z",
+  "_captured_run_id": "r_e371ec32e07440fa98553830da7083d3",
+  "status": "ok",
+  "exit_code": 0,
+  "log_contains": [
+    "The data set WORK.Q2_DIAG_2002 has 13 observations and 3 variables.",
+    "The data set WORK.Q2_DIAG_2002_D has 13 observations and 5 variables.",
+    "Output dataset WORK.Q2_DIAG_2002_DF has 10 observations and 4 variables."
+  ],
+  "log_does_not_contain": [
+    "ERROR:",
+    "[JENNER-ERROR"
+  ],
+  "diagnostics": {
+    "parse_warnings": [],
+    "runtime_warnings": []
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "bundle": "t001_quiz2_diag_flatfile",
+  "source_file": "Quiz2Szabo.sas",
+  "source_blob_sha": "5ed070a6006e5ccb55ba55c25c045ac036b993af",
+  "source_commit": "089232ca168396ea8e05dc9179bcfe2f467e09fe",
+  "notes": "Quiz 2 diagnosis-flag pipeline; quiz2.q2_diag stood in by a 15-row sample built in autoexec; libname path rewritten to ./quiz2; analysis steps unchanged."
+}
